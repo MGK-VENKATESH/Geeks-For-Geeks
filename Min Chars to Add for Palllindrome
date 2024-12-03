@@ -1,0 +1,29 @@
+Description:
+Given a string s, the task is to find the minimum characters to be added at the front to make the string palindrome.
+
+Note: A palindrome string is a sequence of characters that reads the same forward and backward.
+
+Examples:
+
+Input: s = "abc"
+Output: 2
+Explanation: Add 'b' and 'c' at front of above string to make it palindrome : "cbabc"
+Input: s = "aacecaaaa"
+Output: 2
+Explanation: Add 2 a's at front of above string to make it palindrome : "aaaacecaaaa"
+Constraints:
+1 <= s.size() <= 106
+Python3:
+    rev_s = s[::-1]
+    combined = s + '#' + rev_s
+    n = len(combined)
+    lps = [0] * n   
+    for i in range(1, n):
+        j = lps[i - 1]
+        while j > 0 and combined[i] != combined[j]:
+            j = lps[j - 1] 
+        if combined[i] == combined[j]:
+            j += 1
+        lps[i] = j
+    longest_palindromic_prefix = lps[-1]
+    return len(s) - longest_palindromic_prefix
